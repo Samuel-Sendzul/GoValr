@@ -6,7 +6,7 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
-	"github.com/govalr/account"
+	valr "github.com/govalr/private"
 )
 
 
@@ -23,7 +23,7 @@ func main() {
 	log.SetPrefix("govalr: ")
 
 
-	account.GetBalances(os.Getenv("key"), os.Getenv("secret"))
+	valr.GetBalances(os.Getenv("key"), os.Getenv("secret"))
 	// key := os.Getenv("key")
 	// secret := os.Getenv("secret")
 

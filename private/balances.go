@@ -1,35 +1,31 @@
 package private
 
 import (
+"encoding/json"
 	"log"
-	"net/http"
-	"fmt"
-	"encoding/json"
-	"time"
 )
 
-var baseUrl = "https://api.valr.com/"
-
 type Balance struct {
-	Currency string 
+	Currency string `json:"currency"`
+	Available string `json:"available"`
+	Reserved string `json:"reserved"`
+	Total string `json:"total"`
+	UpdatedAt string `json:"updatedAt"`
+	LendReserved string `json:"lendReserved"`
+	BorrowReserved string `json:"borrowReserved"`
+	BorrowedAmount string `json:"borrowedAmount"` 
 }
 
-func GetBalances(key string, secret string) ([]Balance) {
+func GetBalances(key string, secret string) ([]Balance, error) {
 
-	requestPath := fmt.Sprintf("%sv1/account/balances", baseUrl)
-
-	SignRequest(secret, time.Now(), "GET", requestPath, "")
-
-
-	resp, err := http.Get(requestPath)
+	resp, err := SignedGetRequest(key, secret, "", nil)
 	if err != nil {
-		log.Fatal(fmt.Sprintf("Request error: %s", err))
+		log.Fatalf("Error perfroming the signed GET request.")
 	}
 
-	defer resp.Body.Close()
 
 	var balances []Balance
 	json.NewDecoder(resp.Body).Decode(&balances)
 
-	return balances
+	return balances, nil
 }
