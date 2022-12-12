@@ -11,7 +11,10 @@ import (
 
 var baseUrl = "https://api.valr.com/"
 
-func SignedGetRequest(key string, secret string, path string, timestamp int, params map[string]string) (*http.Response, error) {
+func SignedGetRequest(key string, secret string, path string, params map[string]string) (*http.Response, error) {
+	now := time.Now()
+	nowTimesetamp := strconv.FormatInt(now.UnixNano()/1000000, 10)
+	
 	sig := SignRequest(secret, now, "GET", path, "")
 
 
@@ -24,7 +27,7 @@ func SignedGetRequest(key string, secret string, path string, timestamp int, par
 	}
 	request.Header.Set("X-VALR-API-KEY", key)
 	request.Header.Set("X-VALR-SIGNATURE", sig)
-	request.Header.Set("X-VALR-TIMESTAMP",  timestamp)
+	request.Header.Set("X-VALR-TIMESTAMP",  nowTimesetamp)
 
 
 	// Send requests
@@ -33,7 +36,7 @@ func SignedGetRequest(key string, secret string, path string, timestamp int, par
 		log.Fatal(fmt.Sprintf("Response error: %s", err))
 	}
 
-	// Handle unortharised requesting
+	// Handle unaurthorised requesting
 	if resp.Status == "401 Unauthorized" {
 		return nil, errors.New("401 Unauthorized")
 	}
