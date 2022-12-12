@@ -36,7 +36,7 @@
 <h3 align="center">GoVALR</h3>
 
   <p align="center">
-    An optimimised Go module for interacting with the VALR API.
+    A REST connector for VALR, written in Golang.
   </p>
 </div>
 
