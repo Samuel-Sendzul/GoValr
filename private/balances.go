@@ -18,7 +18,7 @@ type Balance struct {
 
 func GetBalances(key string, secret string) ([]Balance, error) {
 
-	resp, err := SignedGetRequest(key, secret, "", nil)
+	resp, err := SignedGetRequest(key, secret, "/v1/account/balances", nil)
 	if err != nil {
 		log.Fatalf("Error perfroming the signed GET request.")
 	}
