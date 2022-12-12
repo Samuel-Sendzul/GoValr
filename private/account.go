@@ -1,8 +1,9 @@
 package private
 
 import (
-"encoding/json"
+	"encoding/json"
 	"log"
+	"fmt"
 )
 
 type Balance struct {
@@ -20,12 +21,17 @@ func GetBalances(key string, secret string) ([]Balance, error) {
 
 	resp, err := SignedGetRequest(key, secret, "/v1/account/balances", nil)
 	if err != nil {
-		log.Fatalf("Error perfroming the signed GET request.")
+		log.Fatalf(fmt.Sprintf("Error perfroming the signed GET request.: %s", err.Error()))
 	}
 
+	defer resp.Body.Close()
 
 	var balances []Balance
 	json.NewDecoder(resp.Body).Decode(&balances)
 
 	return balances, nil
 }
+
+// func GetTransactionHistory(key string, secret string) {
+	
+// }

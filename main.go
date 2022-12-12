@@ -23,7 +23,9 @@ func main() {
 	log.SetPrefix("govalr: ")
 
 
-	valr.GetBalances(os.Getenv("key"), os.Getenv("secret"))
+	valr.GetDepositHistory(os.Getenv("key"), os.Getenv("secret"), "ETH")
+	//valr.GetBalances(os.Getenv("key"), os.Getenv("secret"))
+
 	// key := os.Getenv("key")
 	// secret := os.Getenv("secret")
 

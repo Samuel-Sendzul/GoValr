@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-var baseUrl = "https://api.valr.com/"
+var baseUrl = "https://api.valr.com"
 
 func SignedGetRequest(key string, secret string, path string, params map[string]string) (*http.Response, error) {
 	now := time.Now()
@@ -21,7 +21,7 @@ func SignedGetRequest(key string, secret string, path string, params map[string]
 	client := http.Client{}
 
 	// Create request
-	request, err := http.NewRequest("GET", fmt.Sprintf("%sv1/account/balances", baseUrl), nil)
+	request, err := http.NewRequest("GET", baseUrl + path, nil)
 	if err != nil {
 		log.Fatal(fmt.Sprintf("Request error: %s", err))
 	}
